@@ -1,0 +1,128 @@
+// JSS Styles for the background and other elements
+const jss = window.jss;
+const { createUseStyles } = jss;
+
+const useStyles = createUseStyles({
+  '@global': {
+    'body': {
+      margin: 0,
+      padding: 0,
+      boxSizing: 'border-box',
+      fontFamily: 'Arial, sans-serif',
+      lineHeight: 1.6,
+      background: 'linear-gradient(45deg, #ff7e5f, #feb47b)', // Gradient background
+      backgroundSize: '400% 400%',
+      animation: '$gradient 15s ease infinite',
+      minHeight: '100vh',
+    },
+    '@keyframes gradient': {
+      '0%': {
+        backgroundPosition: '0% 50%',
+      },
+      '50%': {
+        backgroundPosition: '100% 50%',
+      },
+      '100%': {
+        backgroundPosition: '0% 50%',
+      }
+    },
+    'header': {
+      backgroundColor: 'rgba(0, 0, 0, 0.7)', // Semi-transparent header
+      color: 'white',
+      padding: '40px 0',
+      textAlign: 'center',
+    },
+    'header h1': {
+      fontSize: '3rem',
+    },
+    'header p': {
+      fontSize: '1.4rem',
+    },
+    '.btn': {
+      display: 'inline-block',
+      marginTop: '10px',
+      padding: '10px 20px',
+      backgroundColor: '#5cb85c',
+      color: 'white',
+      textDecoration: 'none',
+      borderRadius: '5px',
+    },
+    '.btn:hover': {
+      backgroundColor: '#4cae4c',
+    },
+    'section': {
+      padding: '20px',
+    },
+    'section h2': {
+      fontSize: '2rem',
+      marginBottom: '10px',
+    },
+    '.feedback': {
+      color: 'green',
+      fontWeight: 'bold',
+      marginTop: '10px',
+    },
+    'form': {
+      display: 'flex',
+      flexDirection: 'column',
+    },
+    'form label': {
+      margin: '10px 0 5px',
+    },
+    'form input, form textarea': {
+      padding: '10px',
+      marginBottom: '15px',
+      border: '1px solid #ccc',
+      borderRadius: '5px',
+    },
+    'form button': {
+      padding: '10px 20px',
+      backgroundColor: '#5cb85c',
+      color: 'white',
+      border: 'none',
+      borderRadius: '5px',
+    },
+    'form button:hover': {
+      backgroundColor: '#4cae4c',
+    },
+  },
+});
+
+// Initialize JSS styles
+const classes = useStyles();
+
+// Apply styles dynamically
+document.body.classList.add(classes.body);
+document.querySelector('header').classList.add(classes.header);
+document.querySelector('.btn').classList.add(classes.btn);
+document.querySelectorAll('section').forEach(section => section.classList.add(classes.section));
+document.querySelectorAll('form').forEach(form => form.classList.add(classes.form));
+
+/* Form Validation */
+function validateForm() {
+  const name = document.getElementById('name').value;
+  const email = document.getElementById('email').value;
+  const message = document.getElementById('message').value;
+  const feedback = document.getElementById('form-feedback');
+
+  // Clear previous feedback
+  feedback.textContent = '';
+
+  // Simple validation
+  if (name === '' || email === '' || message === '') {
+    feedback.textContent = 'Please fill in all fields.';
+    return false; // Prevent form submission
+  }
+
+  // Check if email is valid
+  const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+  if (!emailPattern.test(email)) {
+    feedback.textContent = 'Please enter a valid email address.';
+    return false;
+  }
+
+  // If everything is fine, show success message
+  feedback.style.color = 'green';
+  feedback.textContent = 'Your message has been sent successfully!';
+  return false; // Prevent actual form submission for this demo
+}
